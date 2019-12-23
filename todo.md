@@ -1,0 +1,2 @@
+- vscode installation
+- eslint installation

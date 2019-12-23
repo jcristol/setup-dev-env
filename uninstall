@@ -1,0 +1,24 @@
+#!/bin/bash
+
+source ./lib/functions
+source ./lib/globals
+
+brew uninstall "${brew_packages[@]}"
+brew cask uninstall "${brew_casks[@]}"
+
+del_dot_files
+
+# teardown iterm2 prefrences and installed fonts
+rm -rf ~/Library/Fonts/*
+rm -rf ~/Library/Preferences/com.googlecode.iterm2.plist
+
+# uninstall vscode
+rm -rf ~/.vscode
+rm -rf ~/Library/Preferences/com.microsoft.VSCode.plist
+
+# uninstall brew
+ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/uninstall)"
+
+# uninstall oh my zsh
+rm -rf ~/.oh-my-zsh
+

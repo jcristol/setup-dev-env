@@ -1,0 +1,37 @@
+#!/bin/bash
+
+dot_files=$(find dots -type f | sed 's/dots\/\(.*\)/\1/')
+
+function create_dir() {
+  [ ! -d $1 ] && mkdir -p $1
+}
+
+function setup_iterm2() {
+  create_dir ~/Library/Fonts
+  cp ./fonts/* ~/Library/Fonts/.
+  cp ./iterm/com.googlecode.iterm2.plist ~/Library/Preferences/com.googlecode.iterm2.plist
+}
+
+function del_dot_files() {
+  for file in $dot_files;
+    do rm -rf ~/.$file;
+  done
+  rm -rf ~/.vim
+}
+
+function link_dot_files() {
+  create_dir ~/.vim/colors
+  for file in $dot_files;
+    do ln -sF $PWD/dots/$file ~/.$file;
+  done
+}
+
+function install_vscode_plugins() {
+  for line in $@;
+    do code --install-extension $line;
+  done
+}
+
+function install_zsh_plugin() {
+  git clone https://github.com/zsh-users/$1.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/$1
+}

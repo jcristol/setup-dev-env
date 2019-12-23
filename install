@@ -1,0 +1,28 @@
+#!/bin/bash
+
+source ./lib/functions
+source ./lib/globals
+
+# installs oh my zsh
+sh -c "$(curl -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+# installs brew
+[ -z "$(command -v brew)" ] && /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+brew install "${brew_packages[@]}"
+brew cask install "${brew_casks[@]}"
+
+#sets up powerlevel10k theme for ohmyzsh
+git clone --depth=1 https://github.com/romkatv/powerlevel10k.git ~/.oh-my-zsh/custom/themes/powerlevel10k
+
+# link dot files into the home directory
+link_dot_files
+# install all vscode plugins
+install_vscode_plugins "${vscode_extensions[@]}"
+
+# copies configuration and fonts into approriate places for iterm2
+setup_iterm2
+
+# installs some handy zsh plugins
+install_zsh_plugin zsh-syntax-highlighting
+install_zsh_plugin zsh-autosuggestions
+install_zsh_plugin zsh-completions
