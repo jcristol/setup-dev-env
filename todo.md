@@ -1,2 +1,4 @@
-- vscode installation
+- vscode plugins
+- vscode settings
 - eslint installation
+- nvm setup
